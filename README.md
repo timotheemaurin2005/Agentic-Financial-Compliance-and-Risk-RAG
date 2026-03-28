@@ -2,7 +2,7 @@
 
 An agentic Retrieval-Augmented Generation system that analyses FOMC (Federal Open Market Committee) documents to detect policy shifts, contradictions, and evolving monetary policy signals across meetings.
 
-Unlike simple RAG pipelines, this system uses a **LangGraph state machine** with 5 specialised nodes — routing, retrieval, table reasoning, synthesis, and self-verification — to handle nuanced questions about Federal Reserve communications.
+Unlike simple RAG pipelines, this system uses a **LangGraph state machine** with 5 specialised nodes: routing, retrieval, table reasoning, synthesis, and self-verification — to handle nuanced questions about Federal Reserve communications.
 
 ## What It Does
 
