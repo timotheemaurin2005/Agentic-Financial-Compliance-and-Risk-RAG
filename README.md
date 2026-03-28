@@ -99,7 +99,34 @@ Each chunk is embedded twice — once from raw text, once from an LLM-generated 
 ### Self-Verification Loop
 Every answer passes through a grounding check. If the verifier finds unsupported claims, the system automatically re-retrieves with a refined query (up to 2 retries) before delivering the answer.
 
-## Evaluation
+## Evaluation Results
+
+Evaluated across 30 gold-standard questions using RAGAS, covering factual lookups, numerical comparisons, cross-document analysis, and contradiction detection.
+
+| Metric | Score | Target |
+|--------|-------|--------|
+| Faithfulness | 0.62 | 0.85 |
+| Answer Relevancy | 0.71 | 0.80 |
+| Context Precision | 0.49 | 0.75 |
+| Context Recall | 0.34 | 0.70 |
+
+**Analysis:** The primary bottleneck is retrieval recall — the system retrieves approximately 34% of relevant context, which cascades into lower faithfulness and precision scores. Factual single-document queries (rate decisions, vote tallies) perform strongly, while cross-meeting contradiction queries suffer most due to namespace-separated storage requiring multiple retrieval passes across meeting dates.
+
+**Failure Mode Breakdown** (8 of 30 questions scored below 0.6 on at least one metric):
+
+| Failure Mode | Count | Root Cause |
+|-------------|-------|------------|
+| Hallucination | 5 | Synthesizer generates claims beyond retrieved context |
+| Retrieval miss | 2 | Relevant chunks not retrieved due to namespace isolation |
+| Noise retrieval | 2 | Irrelevant chunks diluting context window |
+
+**Identified Improvements:**
+- Increase `top_k` from 10 to 20 for comparison and contradiction queries to improve recall
+- Implement cross-namespace retrieval to avoid missing one side of a multi-meeting comparison
+- Tune chunk overlap from 50 to 100 tokens to reduce information loss at chunk boundaries
+- Add query expansion in the retriever node to catch paraphrased concepts
+
+## Evaluation Framework
 
 The system is evaluated using **RAGAS** across 30 gold-standard questions spanning 4 query types:
 
@@ -110,7 +137,7 @@ The system is evaluated using **RAGAS** across 30 gold-standard questions spanni
 | Comparison | 7 | Cross-document analysis (statement vs minutes) |
 | Contradiction | 7 | Detecting language shifts across meetings |
 
-An **ablation study** sweeps chunk size, top-k retrieval, embedding model, and LLM choice to identify the optimal configuration and quantify tradeoffs.
+An ablation study framework (`eval/ablation.py`) is included to sweep chunk size, top-k retrieval, embedding model, and LLM choice to identify optimal configurations and quantify tradeoffs.
 
 ## Project Structure
 
@@ -155,13 +182,48 @@ uvicorn api.main:app --reload
 python -m eval.run
 ```
 
-## Evaluation Results
+## API Usage
 
-*Results will be published here after the full RAGAS evaluation is complete.*
+**Query the system:**
+```bash
+curl -X POST http://localhost:8000/query \
+  -H "Content-Type: application/json" \
+  -d '{"question": "How did inflation language change between September 2024 and January 2025?"}'
+```
+
+**Response:**
+```json
+{
+  "answer": "Cited answer with [1], [2] passage references...",
+  "sources": [
+    {
+      "meeting_date": "2024-09-18",
+      "doc_type": "fomc_statement",
+      "section": "forward_guidance",
+      "source_url": "https://www.federalreserve.gov/...",
+      "score": 0.82
+    }
+  ],
+  "contradiction_detected": true,
+  "confidence": 0.91
+}
+```
+
+**Stream responses (SSE):**
+```bash
+curl -N -X POST http://localhost:8000/stream/query \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Did the January 2025 minutes reveal disagreement?"}'
+```
+
+**List ingested documents:**
+```bash
+curl http://localhost:8000/documents
+```
 
 ## Author
 
-**Timothee Maurin** — BSc Data Science, University College London
+**Timothée Maurin** — BSc Data Science, University College London
 
 Built as a portfolio project demonstrating production-grade RAG system design with agentic orchestration, structured evaluation, and domain-specific document understanding.
 

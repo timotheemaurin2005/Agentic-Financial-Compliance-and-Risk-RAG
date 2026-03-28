@@ -1,0 +1,42 @@
+{
+  "experiment_id": "eval_20260328_020318",
+  "timestamp": "2026-03-28T02:03:18.724337+00:00",
+  "config": {
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 10,
+    "embedding_model": "text-embedding-3-large",
+    "use_summary_embedding": true,
+    "llm_model": "gpt-4o"
+  },
+  "results": {
+    "faithfulness": 0.0,
+    "answer_relevancy": 0.9701,
+    "context_precision": 1.0,
+    "context_recall": 0.5,
+    "mean_latency_seconds": 35.55,
+    "total_questions": 2
+  },
+  "per_query_results": [
+    {
+      "id": "q001",
+      "query_type": "factual",
+      "difficulty": "easy",
+      "question": "What was the target federal funds rate after the September 2024 FOMC meeting?",
+      "ground_truth": "The Committee decided to lower the target range for the federal funds rate by 1/2 percentage point to 4-3/4 to 5 percent at the September 2024 meeting.",
+      "generated_answer": "The target federal funds rate after the September 2024 FOMC meeting was lowered to a range of 4-3/4 to 5 percent [1], [2].",
+      "num_contexts_retrieved": 2,
+      "latency_seconds": 5.34
+    },
+    {
+      "id": "q002",
+      "query_type": "factual",
+      "difficulty": "easy",
+      "question": "What did the FOMC say about the labor market in the January 2025 statement?",
+      "ground_truth": "The January 2025 statement said that the unemployment rate has stabilized at a low level in recent months, and labor market conditions remain solid.",
+      "generated_answer": "The FOMC stated that the unemployment rate has stabilized at a low level in recent months, and labor market conditions remain solid in the January 2025 statement [1], [2].",
+      "num_contexts_retrieved": 2,
+      "latency_seconds": 65.77
+    }
+  ]
+}

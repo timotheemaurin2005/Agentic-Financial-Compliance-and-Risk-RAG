@@ -1,0 +1,272 @@
+[
+  {
+    "id": "q001",
+    "question": "What was the target federal funds rate after the September 2024 FOMC meeting?",
+    "query_type": "factual",
+    "ground_truth": "The Committee decided to lower the target range for the federal funds rate by 1/2 percentage point to 4-3/4 to 5 percent at the September 2024 meeting.",
+    "source_docs": ["fomc_statement_2024-09-18"],
+    "expected_sections": ["rate_decision"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q002",
+    "question": "What did the FOMC say about the labor market in the January 2025 statement?",
+    "query_type": "factual",
+    "ground_truth": "The January 2025 statement said that the unemployment rate has stabilized at a low level in recent months, and labor market conditions remain solid.",
+    "source_docs": ["fomc_statement_2025-01-29"],
+    "expected_sections": ["economic_conditions"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q003",
+    "question": "Who voted against the rate decision at the September 2024 FOMC meeting?",
+    "query_type": "factual",
+    "ground_truth": "Michelle W. Bowman voted against the September 2024 action, who preferred to lower the target range for the federal funds rate by 1/4 percentage point at this meeting.",
+    "source_docs": ["fomc_statement_2024-09-18"],
+    "expected_sections": ["voting"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q004",
+    "question": "What did the September 2024 FOMC statement say about inflation progress?",
+    "query_type": "factual",
+    "ground_truth": "The September 2024 statement said that inflation has made further progress toward the Committee's 2 percent objective but remains somewhat elevated, and that the Committee has gained greater confidence that inflation is moving sustainably toward 2 percent.",
+    "source_docs": ["fomc_statement_2024-09-18"],
+    "expected_sections": ["economic_conditions", "forward_guidance"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q005",
+    "question": "What was the FOMC's assessment of economic activity in the March 2025 statement?",
+    "query_type": "factual",
+    "ground_truth": "The March 2025 statement said that recent indicators suggest that economic activity has continued to expand at a solid pace.",
+    "source_docs": ["fomc_statement_2025-03-19"],
+    "expected_sections": ["economic_conditions"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q006",
+    "question": "What change did the March 2025 FOMC announce regarding its securities holdings?",
+    "query_type": "factual",
+    "ground_truth": "Beginning in April, the Committee announced it will slow the pace of decline of its securities holdings by reducing the monthly redemption cap on Treasury securities from $25 billion to $5 billion, while maintaining the monthly redemption cap on agency debt and agency mortgage-backed securities at $35 billion.",
+    "source_docs": ["fomc_statement_2025-03-19"],
+    "expected_sections": ["rate_decision", "balance_sheet"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q007",
+    "question": "Who dissented at the December 2024 FOMC meeting and what was their preferred action?",
+    "query_type": "factual",
+    "ground_truth": "Beth M. Hammack voted against the December 2024 action. She preferred to maintain the target range for the federal funds rate at 4-1/2 to 4-3/4 percent rather than cutting by 25 basis points.",
+    "source_docs": ["fomc_statement_2024-12-18"],
+    "expected_sections": ["voting"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q008",
+    "question": "What was the FOMC's risk assessment language in the March 2025 statement?",
+    "query_type": "factual",
+    "ground_truth": "The March 2025 statement said that uncertainty around the economic outlook has increased and that the Committee is attentive to the risks to both sides of its dual mandate. This dropped the previous language that 'risks to achieving its employment and inflation goals are roughly in balance.'",
+    "source_docs": ["fomc_statement_2025-03-19"],
+    "expected_sections": ["risk_assessment", "forward_guidance"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q009",
+    "question": "By how many basis points did the FOMC cut rates in September 2024?",
+    "query_type": "numerical",
+    "ground_truth": "The FOMC cut the target range for the federal funds rate by 50 basis points (1/2 percentage point) in September 2024, from 5-1/4 to 5-1/2 percent down to 4-3/4 to 5 percent.",
+    "source_docs": ["fomc_statement_2024-09-18"],
+    "expected_sections": ["rate_decision"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q010",
+    "question": "What target range was set at the November 2024 FOMC meeting?",
+    "query_type": "numerical",
+    "ground_truth": "The FOMC lowered the target range for the federal funds rate by 1/4 percentage point to 4-1/2 to 4-3/4 percent at the November 2024 meeting.",
+    "source_docs": ["fomc_statement_2024-11-07"],
+    "expected_sections": ["rate_decision"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q011",
+    "question": "What target range was set at the December 2024 FOMC meeting?",
+    "query_type": "numerical",
+    "ground_truth": "The FOMC lowered the target range for the federal funds rate by 1/4 percentage point to 4-1/4 to 4-1/2 percent at the December 2024 meeting.",
+    "source_docs": ["fomc_statement_2024-12-18"],
+    "expected_sections": ["rate_decision"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q012",
+    "question": "How many members dissented at the September 2024 FOMC meeting?",
+    "query_type": "numerical",
+    "ground_truth": "One member dissented at the September 2024 meeting: Michelle W. Bowman, who preferred a 25 basis point cut instead of the 50 basis point cut.",
+    "source_docs": ["fomc_statement_2024-09-18"],
+    "expected_sections": ["voting"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q013",
+    "question": "What was the cumulative rate reduction from September 2024 through December 2024?",
+    "query_type": "numerical",
+    "ground_truth": "The cumulative rate reduction from September through December 2024 was 100 basis points (1 percentage point): 50bp in September 2024 (to 4-3/4 to 5 percent), 25bp in November 2024 (to 4-1/2 to 4-3/4 percent), and 25bp in December 2024 (to 4-1/4 to 4-1/2 percent).",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2024-11-07", "fomc_statement_2024-12-18"],
+    "expected_sections": ["rate_decision"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q014",
+    "question": "How many total FOMC members voted at the January 2025 meeting?",
+    "query_type": "numerical",
+    "ground_truth": "Twelve members voted at the January 2025 meeting: Jerome H. Powell, John C. Williams, Michael S. Barr, Michelle W. Bowman, Susan M. Collins, Lisa D. Cook, Austan D. Goolsbee, Philip N. Jefferson, Adriana D. Kugler, Alberto G. Musalem, Jeffrey R. Schmid, and Christopher J. Waller. The vote was unanimous.",
+    "source_docs": ["fomc_statement_2025-01-29"],
+    "expected_sections": ["voting"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q015",
+    "question": "By how much did the FOMC reduce the monthly Treasury redemption cap in March 2025?",
+    "query_type": "numerical",
+    "ground_truth": "The FOMC reduced the monthly redemption cap on Treasury securities from $25 billion to $5 billion, a reduction of $20 billion per month, beginning in April 2025.",
+    "source_docs": ["fomc_statement_2025-03-19"],
+    "expected_sections": ["rate_decision", "balance_sheet"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q016",
+    "question": "How many consecutive meetings did the FOMC hold rates steady after the December 2024 cut?",
+    "query_type": "numerical",
+    "ground_truth": "The FOMC held rates steady at 4-1/4 to 4-1/2 percent for two consecutive meetings after the December 2024 cut: January 2025 and March 2025.",
+    "source_docs": ["fomc_statement_2025-01-29", "fomc_statement_2025-03-19"],
+    "expected_sections": ["rate_decision"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q017",
+    "question": "How did the FOMC's labor market language differ between the September 2024 and January 2025 statements?",
+    "query_type": "comparison",
+    "ground_truth": "In September 2024, the statement said 'Job gains have slowed, and the unemployment rate has moved up but remains low.' By January 2025, the language shifted to 'The unemployment rate has stabilized at a low level in recent months, and labor market conditions remain solid,' indicating the Committee saw labor market conditions as having stabilized rather than continuing to ease.",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2025-01-29"],
+    "expected_sections": ["economic_conditions"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q018",
+    "question": "Compare the rate decision language used in September 2024 versus November 2024.",
+    "query_type": "comparison",
+    "ground_truth": "In September 2024, the Committee said 'In light of the progress on inflation and the balance of risks, the Committee decided to lower the target range.' In November 2024, the phrasing changed to 'In support of its goals, the Committee decided to lower the target range.' The September language explicitly cited inflation progress and risk balance as the rationale, while November used more generic goal-oriented framing.",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2024-11-07"],
+    "expected_sections": ["rate_decision"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q019",
+    "question": "How did the FOMC's forward guidance language on additional rate adjustments change between November and December 2024?",
+    "query_type": "comparison",
+    "ground_truth": "In November 2024, the Committee said 'In considering additional adjustments to the target range.' In December 2024, the language changed to 'In considering the extent and timing of additional adjustments to the target range,' adding 'extent and timing' which signaled a more cautious approach to future rate cuts.",
+    "source_docs": ["fomc_statement_2024-11-07", "fomc_statement_2024-12-18"],
+    "expected_sections": ["rate_decision", "forward_guidance"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q020",
+    "question": "Compare the dissents at the September 2024 and December 2024 meetings in terms of direction.",
+    "query_type": "comparison",
+    "ground_truth": "The dissents were in opposite directions. In September 2024, Michelle W. Bowman dissented wanting a smaller cut (25bp instead of 50bp). In December 2024, Beth M. Hammack dissented wanting no cut at all (preferred to maintain the rate at 4-1/2 to 4-3/4 percent rather than cutting by 25bp).",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2024-12-18"],
+    "expected_sections": ["voting"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q021",
+    "question": "How did the economic outlook uncertainty language change between January 2025 and March 2025?",
+    "query_type": "comparison",
+    "ground_truth": "In January 2025, the statement said 'The economic outlook is uncertain, and the Committee is attentive to the risks to both sides of its dual mandate.' In March 2025, the language shifted to 'Uncertainty around the economic outlook has increased. The Committee is attentive to the risks to both sides of its dual mandate.' The key change was the addition of 'has increased,' elevating the level of concern about uncertainty.",
+    "source_docs": ["fomc_statement_2025-01-29", "fomc_statement_2025-03-19"],
+    "expected_sections": ["risk_assessment", "forward_guidance"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q022",
+    "question": "Compare the nature of the dissents at December 2024 and March 2025 — were they about rate policy itself or other aspects?",
+    "query_type": "comparison",
+    "ground_truth": "The December 2024 dissent (Beth M. Hammack) was purely about the rate decision — she preferred no cut. The March 2025 dissent (Christopher J. Waller) was different: he supported the rate hold but disagreed on balance sheet policy, preferring to continue the current pace of decline in securities holdings rather than slowing them. This marked a shift from dissenting on rate levels to dissenting on quantitative tightening pace.",
+    "source_docs": ["fomc_statement_2024-12-18", "fomc_statement_2025-03-19"],
+    "expected_sections": ["voting", "balance_sheet"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q023",
+    "question": "How did the November 2024 statement's inflation description compare to the September 2024 statement?",
+    "query_type": "comparison",
+    "ground_truth": "In September 2024, the statement said inflation 'has made further progress toward the Committee's 2 percent objective but remains somewhat elevated' and added that the Committee 'has gained greater confidence that inflation is moving sustainably toward 2 percent.' In November 2024, the statement said inflation 'has made progress toward the Committee's 2 percent objective but remains somewhat elevated,' dropping both 'further' and the 'greater confidence' language, suggesting a less optimistic inflation assessment.",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2024-11-07"],
+    "expected_sections": ["economic_conditions", "forward_guidance"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q024",
+    "question": "How did the FOMC's inflation language change between the September 2024 and January 2025 statements?",
+    "query_type": "contradiction",
+    "ground_truth": "In September 2024, the Committee stated it 'has gained greater confidence that inflation is moving sustainably toward 2 percent.' By January 2025, this confidence language was entirely removed, and the statement simply said 'Inflation remains somewhat elevated,' without mentioning progress or confidence. This represents a notable hawkish shift in tone.",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2025-01-29"],
+    "expected_sections": ["economic_conditions", "forward_guidance"],
+    "difficulty": "easy"
+  },
+  {
+    "id": "q025",
+    "question": "The September 2024 statement initiated rate cuts citing inflation progress. Did subsequent meetings maintain this rationale?",
+    "query_type": "contradiction",
+    "ground_truth": "No. The September 2024 statement explicitly cited 'progress on inflation and the balance of risks' as the reason for cutting rates. By November 2024 and December 2024, the rationale shifted to the generic 'In support of its goals,' dropping the explicit inflation progress framing. By January 2025, the Committee held rates steady and the inflation language regressed to simply 'Inflation remains somewhat elevated,' contradicting the September optimism.",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2024-11-07", "fomc_statement_2025-01-29"],
+    "expected_sections": ["rate_decision", "economic_conditions"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q026",
+    "question": "The January 2025 statement says risks are 'roughly in balance,' but did the March 2025 statement agree with this assessment?",
+    "query_type": "contradiction",
+    "ground_truth": "No. The January 2025 statement said 'The Committee judges that the risks to achieving its employment and inflation goals are roughly in balance.' The March 2025 statement dropped this language entirely, instead saying 'Uncertainty around the economic outlook has increased,' which signals that the Committee no longer viewed risks as balanced and saw increased upside risks to inflation or downside risks to employment.",
+    "source_docs": ["fomc_statement_2025-01-29", "fomc_statement_2025-03-19"],
+    "expected_sections": ["risk_assessment", "forward_guidance"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q027",
+    "question": "The November 2024 FOMC vote was unanimous, suggesting full consensus. Did subsequent meetings maintain this unanimity?",
+    "query_type": "contradiction",
+    "ground_truth": "The November 2024 vote was indeed unanimous with all 12 voting members in agreement. The December 2024 meeting broke this unanimity with Beth M. Hammack dissenting (preferring no cut). January 2025 returned to unanimity. Then March 2025 saw Christopher J. Waller dissent — not on the rate decision itself, but on the pace of balance sheet reduction. The unanimity was therefore not sustained.",
+    "source_docs": ["fomc_statement_2024-11-07", "fomc_statement_2024-12-18", "fomc_statement_2025-01-29", "fomc_statement_2025-03-19"],
+    "expected_sections": ["voting"],
+    "difficulty": "medium"
+  },
+  {
+    "id": "q028",
+    "question": "Track how the FOMC's description of inflation evolved across all five meetings from September 2024 to March 2025.",
+    "query_type": "contradiction",
+    "ground_truth": "September 2024: 'Inflation has made further progress toward the Committee's 2 percent objective but remains somewhat elevated' with 'greater confidence' it is moving sustainably toward 2 percent. November 2024: Dropped 'further' — 'Inflation has made progress toward the Committee's 2 percent objective but remains somewhat elevated.' December 2024: Identical to November — 'has made progress...but remains somewhat elevated.' January 2025: Dropped progress language entirely — simply 'Inflation remains somewhat elevated.' March 2025: Identical to January — 'Inflation remains somewhat elevated.' The trajectory shows a steady retreat from the initial inflation optimism.",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2024-11-07", "fomc_statement_2024-12-18", "fomc_statement_2025-01-29", "fomc_statement_2025-03-19"],
+    "expected_sections": ["economic_conditions"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q029",
+    "question": "The September 2024 FOMC appeared confident enough to cut by 50bp. Does the March 2025 stance contradict this confidence?",
+    "query_type": "contradiction",
+    "ground_truth": "Yes, substantially. In September 2024, the Committee cut by 50bp citing that it 'has gained greater confidence that inflation is moving sustainably toward 2 percent' and judged risks 'roughly in balance.' By March 2025, the Committee was holding rates steady, had dropped all confidence language on inflation, stated only that 'Inflation remains somewhat elevated,' and noted that 'Uncertainty around the economic outlook has increased' — no longer characterizing risks as balanced. Additionally, the Committee was slowing balance sheet reduction, a signal of caution rather than confidence.",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2025-03-19"],
+    "expected_sections": ["rate_decision", "forward_guidance", "risk_assessment"],
+    "difficulty": "hard"
+  },
+  {
+    "id": "q030",
+    "question": "Track the evolution of forward guidance language on rate adjustments across the five meetings from September 2024 to March 2025.",
+    "query_type": "contradiction",
+    "ground_truth": "September 2024: 'In considering additional adjustments to the target range for the federal funds rate, the Committee will carefully assess incoming data, the evolving outlook, and the balance of risks.' November 2024: Identical language — 'In considering additional adjustments.' December 2024: Added 'extent and timing' — 'In considering the extent and timing of additional adjustments,' signaling more caution. January 2025: Maintained the 'extent and timing' language while holding rates steady. March 2025: Maintained the 'extent and timing' language while still holding rates steady. The addition of 'extent and timing' in December marked the pivot from active cutting to a more patient stance.",
+    "source_docs": ["fomc_statement_2024-09-18", "fomc_statement_2024-11-07", "fomc_statement_2024-12-18", "fomc_statement_2025-01-29", "fomc_statement_2025-03-19"],
+    "expected_sections": ["rate_decision", "forward_guidance"],
+    "difficulty": "hard"
+  }
+]
