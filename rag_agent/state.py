@@ -1,6 +1,6 @@
 """RAGState — shared state schema for the LangGraph agentic RAG pipeline."""
 
-from typing import Literal, Optional, TypedDict
+from typing import Any, Literal, Optional, TypedDict
 
 
 class RAGState(TypedDict):
@@ -17,6 +17,7 @@ class RAGState(TypedDict):
 
     # ── Retrieval ──────────────────────────────────────────────────────
     metadata_filters: Optional[dict]
+    _router_classification: Optional[dict[str, Any]]  # full LLM classification for retriever
     retrieved_chunks: list[dict]
     table_chunks: list[dict]
     text_chunks: list[dict]

@@ -28,15 +28,15 @@ def route_after_retrieval(state: RAGState) -> str:
 def route_after_verification(state: RAGState) -> str:
     """Route based on grounding verdict.
 
-    - Grounded + high confidence → end
+    - Grounded + high confidence → END
     - Not grounded + retries remaining → retry via retriever
-    - Retries exhausted → end (with disclaimer)
+    - Retries exhausted → END (with disclaimer)
     """
     if state.get("is_grounded") and (state.get("confidence_score") or 0) >= 0.7:
-        return "end"
+        return END
     if (state.get("retry_count") or 0) < 2:
         return "retriever"
-    return "end"
+    return END
 
 
 # ── Graph assembly ─────────────────────────────────────────────────────────
@@ -58,10 +58,18 @@ def build_graph() -> StateGraph:
 
     # Edges
     graph.add_edge("router", "retriever")
-    graph.add_conditional_edges("retriever", route_after_retrieval)
+    graph.add_conditional_edges(
+        "retriever",
+        route_after_retrieval,
+        {"table_reasoner": "table_reasoner", "synthesizer": "synthesizer"},
+    )
     graph.add_edge("table_reasoner", "synthesizer")
     graph.add_edge("synthesizer", "verifier")
-    graph.add_conditional_edges("verifier", route_after_verification)
+    graph.add_conditional_edges(
+        "verifier",
+        route_after_verification,
+        {END: END, "retriever": "retriever"},
+    )
 
     return graph
 
