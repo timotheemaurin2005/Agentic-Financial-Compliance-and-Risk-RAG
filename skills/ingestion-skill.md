@@ -1,45 +1,76 @@
-# Ingestion Skill — Financial Document Parsing & Chunking
+# Ingestion Skill — FOMC Document Parsing & Chunking
 
 ## Purpose
 
-This skill governs how raw SEC filings, earnings transcripts, and market reports are parsed, chunked, embedded, and upserted into Pinecone. Follow these rules exactly.
+This skill governs how FOMC Statements and Meeting Minutes are downloaded, parsed, chunked, embedded, and upserted into Pinecone. Follow these rules exactly.
 
 ## Document Sources
 
-| Source           | Format    | How to Obtain                                      |
-|------------------|-----------|-----------------------------------------------------|
-| SEC 10-K / 10-Q  | HTML/PDF  | EDGAR full-text search API or direct filing URL     |
-| Earnings calls   | PDF/TXT   | Company IR pages, Seeking Alpha, Motley Fool        |
-| Market reports    | PDF       | Analyst reports, industry outlook PDFs              |
+| Document         | Format     | URL Pattern                                                              |
+|------------------|------------|--------------------------------------------------------------------------|
+| FOMC Statement   | HTML       | `https://www.federalreserve.gov/newsevents/pressreleases/monetary{YYYYMMDD}a.htm` |
+| FOMC Minutes     | HTML       | `https://www.federalreserve.gov/monetarypolicy/fomcminutes{YYYYMMDD}.htm`          |
+
+### Target Meetings
+| Meeting Date | Statement URL Date | Notes                    |
+|--------------|--------------------|--------------------------|
+| 2024-09-18   | 20240918           | First rate cut in cycle  |
+| 2024-11-07   | 20241107           | Post-election meeting    |
+| 2024-12-18   | 20241218           | December projections     |
+| 2025-01-29   | 20250129           | First meeting of 2025    |
+| 2025-03-19   | 20250319           | Latest available         |
+
+### Download Rules
+- Use `requests` + `BeautifulSoup` to scrape HTML content from the Fed website
+- Save raw HTML to `data/raw/{doc_type}_{meeting_date}.html` (e.g., `fomc_statement_2025-01-29.html`)
+- Respect rate limits: add a 2-second delay between requests
+- Set a proper User-Agent header
+- These are public US government documents — no copyright restrictions
 
 ## Parsing Rules
 
-### PDF Parsing
-- Use `pymupdf` (fitz) as the primary PDF parser
-- Extract text page-by-page, preserving page numbers in metadata
-- For scanned PDFs, fall back to `pytesseract` OCR
+### HTML Parsing
+- Use `BeautifulSoup` (not pymupdf — these are HTML pages, not PDFs)
+- Extract the main article content (typically inside a `<div class="col-xs-12 col-sm-8 col-md-8">` or similar container)
+- Strip navigation, headers, footers, and sidebar content
+- Preserve paragraph structure
+
+### Section Detection — FOMC Statements
+Statements are short and follow a consistent structure. Detect sections by content patterns:
+
+| Section              | Detection Pattern                                                    |
+|----------------------|----------------------------------------------------------------------|
+| `economic_assessment`| First 1–2 paragraphs: discusses jobs, inflation, economic activity   |
+| `rate_decision`      | Paragraph containing "federal funds rate" and a target range         |
+| `forward_guidance`   | Paragraph containing language about future policy direction          |
+| `vote_tally`         | Final paragraph listing "Voting for/against" with member names       |
+
+### Section Detection — FOMC Minutes
+Minutes have explicit section headers. Map them:
+
+| Minutes Header (approximate)                        | Section Label                    |
+|-----------------------------------------------------|----------------------------------|
+| "Staff Review of the Economic Situation"             | `staff_outlook`                  |
+| "Staff Review of the Financial Situation"            | `staff_outlook`                  |
+| "Staff Economic Outlook"                             | `staff_outlook`                  |
+| "Participants' Views on Current Conditions"          | `participants_views_economy`     |
+| "Participants' Views on the Outlook"                 | `participants_views_economy`     |
+| "Participants' Discussion of Policy"                 | `participants_views_policy`      |
+| "Committee Policy Action"                            | `committee_action`               |
+| Dissent paragraphs or "voted against"                | `dissenting_views`               |
+
+If a section header doesn't match any pattern, label it `other`.
 
 ### Table Extraction
-- Use `tabula-py` for PDF tables (Java-backed, most accurate for financial tables)
-- If tabula fails, fall back to `camelot` (lattice mode first, then stream mode)
-- Output tables as **markdown format**, preserving column headers and alignment
-- Example output:
+- Vote tallies in statements: parse the "Voting for" / "Voting against" text into a markdown table:
   ```markdown
-  | Metric          | FY2023   | FY2024   | Change   |
-  |-----------------|----------|----------|----------|
-  | Revenue ($M)    | 383,285  | 391,035  | +2.0%    |
-  | Net Income ($M) | 96,995   | 93,736   | -3.4%    |
+  | Vote     | Members                                                |
+  |----------|--------------------------------------------------------|
+  | For      | Powell, Williams, Barr, Bowman, Cook, Goolsbee, ...    |
+  | Against  | None                                                   |
   ```
-- NEVER flatten a table into a sentence like "Revenue was 383,285 in FY2023 and 391,035 in FY2024"
-
-### Section Detection
-- SEC filings have standard sections. Detect them using heading patterns:
-  - "Item 1A" or "Risk Factors" → `risk_factors`
-  - "Item 7" or "Management's Discussion and Analysis" → `mda`
-  - "Item 8" or "Financial Statements" → `financial_statements`
-  - "Item 1" or "Business" → `business_overview`
-  - For non-SEC docs, use LLM classification to assign the closest section label
-- Tag every chunk with its detected section
+- Economic projection tables in minutes (if present): preserve as markdown tables
+- Set `is_table: true` in metadata for these chunks
 
 ## Chunking Strategy
 
@@ -50,10 +81,13 @@ This skill governs how raw SEC filings, earnings transcripts, and market reports
 - Overlap: 50 tokens between consecutive chunks from the same section
 - Each chunk inherits the section label of its parent section
 
+### FOMC Statement Special Rule
+- Statements are short (typically 4–6 paragraphs). Each paragraph should be its own chunk with the appropriate section label.
+- Do NOT merge paragraphs from different sections into one chunk.
+
 ### Table Chunks
 - One table = one chunk (do NOT split tables across chunks)
-- If a table exceeds 800 tokens, split by logical row groups (e.g., by year or category)
-- Prepend a one-line context header: "Table: [section] from [company] [doc_type] [fiscal_year]"
+- Prepend a one-line context header: "Table: [section] from FOMC [doc_type] [meeting_date]"
 - Set `is_table: true` in metadata
 
 ### Chunk Schema (Pydantic)
@@ -61,17 +95,16 @@ This skill governs how raw SEC filings, earnings transcripts, and market reports
 from pydantic import BaseModel
 
 class ChunkMetadata(BaseModel):
-    company: str              # Ticker symbol, e.g., "AAPL"
-    fiscal_year: int          # e.g., 2024
-    doc_type: str             # "10-K" | "10-Q" | "earnings_transcript" | "market_report"
-    section: str              # "risk_factors" | "mda" | "financial_statements" | "business_overview" | "executive_summary" | "other"
+    doc_type: str             # "fomc_statement" | "fomc_minutes"
+    meeting_date: str         # ISO format: "2025-01-29"
+    year: int                 # e.g., 2025
+    section: str              # See section detection tables above
     is_table: bool            # True if this chunk is a structured table
-    source_url: str           # EDGAR URL or report source
+    source_url: str           # Federal Reserve URL
     chunk_index: int          # Sequential position in the document
-    page_number: int          # Original PDF page
 
 class Chunk(BaseModel):
-    id: str                   # Format: "{company}_{fiscal_year}_{doc_type}_{chunk_index}"
+    id: str                   # Format: "{doc_type}_{meeting_date}_{chunk_index}"
     text: str                 # The chunk content (text or markdown table)
     summary: str              # LLM-generated one-line summary
     metadata: ChunkMetadata
@@ -86,8 +119,9 @@ Every chunk gets TWO embeddings:
 
 ### Summary Generation Prompt
 ```
-Summarise the following financial document excerpt in one sentence.
-Focus on: what metric/topic is discussed, the company, the time period, and any numerical trend.
+Summarise the following FOMC document excerpt in one sentence.
+Focus on: the policy topic discussed, the meeting date, and any specific language about rates, inflation, or employment.
+Pay special attention to qualifier words (some, most, several, a few participants) as these signal the degree of consensus.
 
 Excerpt:
 {chunk_text}
@@ -103,7 +137,7 @@ One-sentence summary:
 ## Pinecone Upsert Rules
 
 - Index name: `fin-compliance-rag`
-- Namespace: `{company}_{fiscal_year}` (e.g., `AAPL_2024`)
+- Namespace: `fomc_{meeting_date}` (e.g., `fomc_2025-01-29`)
 - Each vector ID: `{chunk.id}_{raw|summary}` (two vectors per chunk)
 - Metadata: flatten the ChunkMetadata dict — Pinecone requires flat key-value pairs
 - Upsert in batches of 100 vectors
@@ -111,15 +145,31 @@ One-sentence summary:
 
 ## Error Handling
 
-- If a PDF fails to parse: log the filename and skip, don't crash the pipeline
-- If table extraction returns empty: log a warning, treat the page as text-only
+- If a Fed URL returns 404: log the URL and skip, don't crash the pipeline
+- If section detection fails: label the chunk as `other`, log a warning
 - If embedding API rate-limits: implement exponential backoff (max 5 retries)
 - If Pinecone upsert fails: retry once, then log and continue
 
+## Pipeline Execution Order
+
+```
+1. Download HTML from Fed website → save to data/raw/
+2. Parse HTML with BeautifulSoup → extract article content
+3. Detect sections → label each paragraph/block
+4. Chunk text → 400-600 tokens per chunk with section labels
+5. Extract tables → separate table chunks with is_table=true
+6. Generate summaries → one-line LLM summary per chunk
+7. Embed → dual vectors (raw + summary) per chunk
+8. Upsert → Pinecone with metadata filters
+9. Verify → test query to confirm retrieval works
+```
+
 ## Testing Checklist
 
-- [ ] Parse a 10-K PDF and verify section labels are correct
-- [ ] Extract at least one table and confirm markdown format is valid
-- [ ] Verify chunk token counts are in the 400–600 range
-- [ ] Confirm dual embeddings produce two vectors per chunk in Pinecone
-- [ ] Run a test query with metadata filter and verify correct results return
+- [ ] All 10 documents download successfully (5 statements + 5 minutes)
+- [ ] Section labels are correctly assigned for at least one statement and one minutes document
+- [ ] Vote tally is parsed as a markdown table
+- [ ] Chunk token counts are in the 400–600 range
+- [ ] Dual embeddings produce two vectors per chunk in Pinecone
+- [ ] Test query with metadata filter `{"doc_type": "fomc_statement", "meeting_date": "2025-01-29"}` returns correct results
+- [ ] Namespaces are correctly separated per meeting date

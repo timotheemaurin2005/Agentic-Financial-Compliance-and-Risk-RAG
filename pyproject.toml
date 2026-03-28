@@ -9,9 +9,13 @@ description = "Financial Compliance and Risk RAG System"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "beautifulsoup4>=4.12",
+    "lxml>=5.0",
+    "python-dotenv>=1.0",
+    "requests>=2.31",
     "langchain>=0.3",
     "langgraph>=0.2",
-    "pinecone-client>=3.0",
+    "pinecone>=3.0",
     "fastapi>=0.115",
     "uvicorn[standard]>=0.32",
     "ragas>=0.2",
