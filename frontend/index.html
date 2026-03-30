@@ -393,45 +393,55 @@
             <span>Documents</span>
           </div>
           <div class="panel-content">
-            <div class="doc-item active">
+            <div class="doc-item" onclick="openDocument('fomc_statement_2024-09-18.html', 'Sep 2024 Statement')">
               <span class="doc-type">STMT</span>
               <span class="doc-name">Sep 2024 Statement</span>
+              <a href="/raw/fomc_statement_2024-09-18.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_minutes_2024-09-18.html', 'Sep 2024 Minutes')">
               <span class="doc-type">MIN</span>
               <span class="doc-name">Sep 2024 Minutes</span>
+              <a href="/raw/fomc_minutes_2024-09-18.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_statement_2024-11-07.html', 'Nov 2024 Statement')">
               <span class="doc-type">STMT</span>
               <span class="doc-name">Nov 2024 Statement</span>
+              <a href="/raw/fomc_statement_2024-11-07.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_minutes_2024-11-07.html', 'Nov 2024 Minutes')">
               <span class="doc-type">MIN</span>
               <span class="doc-name">Nov 2024 Minutes</span>
+              <a href="/raw/fomc_minutes_2024-11-07.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_statement_2024-12-18.html', 'Dec 2024 Statement')">
               <span class="doc-type">STMT</span>
               <span class="doc-name">Dec 2024 Statement</span>
+              <a href="/raw/fomc_statement_2024-12-18.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_minutes_2024-12-18.html', 'Dec 2024 Minutes')">
               <span class="doc-type">MIN</span>
               <span class="doc-name">Dec 2024 Minutes</span>
+              <a href="/raw/fomc_minutes_2024-12-18.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_statement_2025-01-29.html', 'Jan 2025 Statement')">
               <span class="doc-type">STMT</span>
               <span class="doc-name">Jan 2025 Statement</span>
+              <a href="/raw/fomc_statement_2025-01-29.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_minutes_2025-01-29.html', 'Jan 2025 Minutes')">
               <span class="doc-type">MIN</span>
               <span class="doc-name">Jan 2025 Minutes</span>
+              <a href="/raw/fomc_minutes_2025-01-29.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_statement_2025-03-19.html', 'Mar 2025 Statement')">
               <span class="doc-type">STMT</span>
               <span class="doc-name">Mar 2025 Statement</span>
+              <a href="/raw/fomc_statement_2025-03-19.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
-            <div class="doc-item">
+            <div class="doc-item" onclick="openDocument('fomc_minutes_2025-03-19.html', 'Mar 2025 Minutes')">
               <span class="doc-type">MIN</span>
               <span class="doc-name">Mar 2025 Minutes</span>
+              <a href="/raw/fomc_minutes_2025-03-19.html" download title="Download raw HTML" class="doc-download" onclick="event.stopPropagation()">↓</a>
             </div>
           </div>
         </div>
@@ -485,6 +495,25 @@
               <p>Context chunks will appear here when you ask a question</p>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Document Modal ── -->
+    <div id="doc-modal" class="doc-modal" aria-hidden="true">
+      <div class="doc-modal-overlay" onclick="closeDocument()"></div>
+      <div class="doc-modal-content">
+        <div class="doc-modal-header">
+          <h3 id="doc-modal-title">Document Title</h3>
+          <button class="doc-modal-close" onclick="closeDocument()">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"/>
+              <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+        <div class="doc-modal-body" id="doc-modal-body">
+          <p>Loading document text...</p>
         </div>
       </div>
     </div>

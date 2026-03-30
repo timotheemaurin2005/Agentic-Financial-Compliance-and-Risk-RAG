@@ -159,11 +159,12 @@ window.addEventListener('popstate', () => {
   }
 });
 
-// ── Chat Interface (Demo) ──
-function sendMessage() {
+// ── Chat Interface — wired to FastAPI backend ──
+async function sendMessage() {
   const input = document.getElementById('chat-input');
   const messages = document.getElementById('chat-messages');
   const contextPanel = document.getElementById('context-panel');
+  const sendBtn = document.getElementById('send-btn');
 
   if (!input || !messages) return;
 
@@ -184,50 +185,158 @@ function sendMessage() {
   messages.appendChild(userMsg);
 
   input.value = '';
+  input.disabled = true;
+  if (sendBtn) sendBtn.disabled = true;
   messages.scrollTop = messages.scrollHeight;
 
-  // Simulate assistant response
-  setTimeout(() => {
-    const assistantMsg = document.createElement('div');
-    assistantMsg.className = 'chat-message assistant';
-    assistantMsg.innerHTML = `
-      <div class="message-bubble">
-        <em style="color: var(--text-muted); font-size: 0.82rem;">
-          This is a demo interface. Connect to the FastAPI backend at <code style="color: var(--accent); font-size: 0.78rem;">/api/query</code> to get real FOMC analysis powered by LangGraph.
-        </em>
+  // Add typing indicator
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'chat-message assistant';
+  typingDiv.id = 'typing-indicator';
+  typingDiv.innerHTML = `
+    <div class="message-bubble">
+      <span class="typing-status" id="typing-status">Connecting...</span>
+      <span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>
+    </div>
+  `;
+  messages.appendChild(typingDiv);
+  messages.scrollTop = messages.scrollHeight;
+
+  // Clear context panel
+  if (contextPanel) {
+    contextPanel.innerHTML = '<div class="context-empty"><p>Retrieving context...</p></div>';
+  }
+
+  try {
+    const response = await fetch('/api/stream/query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ question: text })
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let assistantText = '';
+    let bubbleCreated = false;
+    let assistantMsg = null;
+    let bubbleEl = null;
+
+    let buffer = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+
+      buffer += decoder.decode(value, { stream: true });
+
+      let newlineIndex;
+      while ((newlineIndex = buffer.indexOf('\n\n')) >= 0) {
+        // Extract a complete event chunk
+        const eventChunk = buffer.slice(0, newlineIndex).trim();
+        buffer = buffer.slice(newlineIndex + 2);
+
+        if (!eventChunk) continue;
+
+        // An event chunk might be multi-line, but the payload starts with 'data: '
+        const lines = eventChunk.split('\n');
+        for (const line of lines) {
+          if (!line.startsWith('data: ')) continue;
+          
+          const payload = line.slice(6).trim();
+          if (payload === '[DONE]') continue;
+
+          try {
+            const event = JSON.parse(payload);
+
+            if (event.type === 'status') {
+              const statusEl = document.getElementById('typing-status');
+              if (statusEl) statusEl.textContent = event.status;
+            }
+
+            if (event.type === 'token') {
+              if (!bubbleCreated) {
+                const typing = document.getElementById('typing-indicator');
+                if (typing) typing.remove();
+                assistantMsg = document.createElement('div');
+                assistantMsg.className = 'chat-message assistant';
+                assistantMsg.innerHTML = `
+                  <div class="message-bubble"></div>
+                  <span class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                `;
+                messages.appendChild(assistantMsg);
+                bubbleEl = assistantMsg.querySelector('.message-bubble');
+                bubbleCreated = true;
+              }
+              assistantText += event.token;
+              if (bubbleEl) bubbleEl.textContent = assistantText;
+              messages.scrollTop = messages.scrollHeight;
+            }
+
+            if (event.type === 'final') {
+              if (!bubbleCreated) {
+                const typing = document.getElementById('typing-indicator');
+                if (typing) typing.remove();
+                assistantMsg = document.createElement('div');
+                assistantMsg.className = 'chat-message assistant';
+                assistantMsg.innerHTML = `
+                  <div class="message-bubble">${escapeHtml(event.answer || 'No answer generated.')}</div>
+                  <span class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                `;
+                messages.appendChild(assistantMsg);
+              }
+
+              if (contextPanel && event.sources && event.sources.length > 0) {
+                contextPanel.innerHTML = event.sources.map(src => `
+                  <div class="context-chunk">
+                    <div class="chunk-source">
+                      <span class="chunk-badge">${escapeHtml(src.doc_type || 'DOC')}</span>
+                      <span class="chunk-label">${escapeHtml(src.meeting_date || src.source || 'Unknown')}</span>
+                    </div>
+                    <p class="chunk-text">"${escapeHtml((src.text || src.content || '').slice(0, 250))}..."</p>
+                  </div>
+                `).join('');
+              } else if (contextPanel) {
+                contextPanel.innerHTML = '<div class="context-empty"><p>No context chunks retrieved</p></div>';
+              }
+              messages.scrollTop = messages.scrollHeight;
+            }
+
+            if (event.type === 'error') {
+              throw new Error(event.error);
+            }
+          } catch (parseErr) {
+            // Ignore parse errors for partial/malformed JSON, but log them for debugging
+            if (parseErr.message !== 'Unexpected end of JSON input') {
+              console.warn('SSE parse error:', parseErr.message, 'Payload:', payload);
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    const typing = document.getElementById('typing-indicator');
+    if (typing) typing.remove();
+
+    const errorMsg = document.createElement('div');
+    errorMsg.className = 'chat-message assistant';
+    errorMsg.innerHTML = `
+      <div class="message-bubble" style="border-color: rgba(255, 85, 85, 0.2);">
+        <span style="color: #ff5555; font-size: 0.82rem;">⚠ ${escapeHtml(err.message)}</span>
+        <br><em style="color: var(--text-muted); font-size: 0.78rem;">Make sure the FastAPI backend is running and your .env has valid API keys.</em>
       </div>
       <span class="message-time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
     `;
-    messages.appendChild(assistantMsg);
+    messages.appendChild(errorMsg);
     messages.scrollTop = messages.scrollHeight;
-
-    // Add sample context chunks
-    if (contextPanel) {
-      contextPanel.innerHTML = `
-        <div class="context-chunk">
-          <div class="chunk-source">
-            <span class="chunk-badge">STMT</span>
-            <span class="chunk-label">Sep 2024 Statement</span>
-          </div>
-          <p class="chunk-text">"The Committee decided to lower the target range for the federal funds rate by 1/2 percentage point to 4-3/4 to 5 percent..."</p>
-        </div>
-        <div class="context-chunk">
-          <div class="chunk-source">
-            <span class="chunk-badge">MIN</span>
-            <span class="chunk-label">Sep 2024 Minutes</span>
-          </div>
-          <p class="chunk-text">"A substantial majority of participants supported lowering the target range for the federal funds rate by 50 basis points..."</p>
-        </div>
-        <div class="context-chunk">
-          <div class="chunk-source">
-            <span class="chunk-badge">STMT</span>
-            <span class="chunk-label">Jan 2025 Statement</span>
-          </div>
-          <p class="chunk-text">"The Committee decided to maintain the target range for the federal funds rate at 4-1/4 to 4-1/2 percent..."</p>
-        </div>
-      `;
-    }
-  }, 800);
+  } finally {
+    input.disabled = false;
+    if (sendBtn) sendBtn.disabled = false;
+    input.focus();
+  }
 }
 
 function escapeHtml(text) {
@@ -272,3 +381,53 @@ document.addEventListener('DOMContentLoaded', () => {
   initArchStagger();
   initCardGlow();
 });
+
+// ── Document Modal logic ──
+async function openDocument(filename, title) {
+  const modal = document.getElementById('doc-modal');
+  const titleEl = document.getElementById('doc-modal-title');
+  const bodyEl = document.getElementById('doc-modal-body');
+
+  if (!modal || !titleEl || !bodyEl) return;
+
+  titleEl.textContent = title;
+  bodyEl.innerHTML = '<p>Loading document text...</p>';
+  modal.setAttribute('aria-hidden', 'false');
+
+  try {
+    const response = await fetch('/raw/' + filename);
+    if (!response.ok) throw new Error('Document not found');
+    
+    const text = await response.text();
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(text, 'text/html');
+    
+    // Cleanly extract text from paragraphs
+    const paragraphs = doc.querySelectorAll('p');
+    if (paragraphs.length > 0) {
+      bodyEl.innerHTML = '';
+      paragraphs.forEach(p => {
+        const textContent = p.textContent.trim();
+        // Skip overly short / empty artifacts from raw HTML parsing
+        if (textContent && textContent.length > 5) {
+          const pEl = document.createElement('p');
+          pEl.textContent = textContent;
+          bodyEl.appendChild(pEl);
+        }
+      });
+    } else {
+      const pEl = document.createElement('p');
+      pEl.textContent = doc.body.textContent.trim();
+      bodyEl.appendChild(pEl);
+    }
+  } catch (err) {
+    bodyEl.innerHTML = `<p style="color:#ff5555">Error loading document: ${escapeHtml(err.message)}</p>`;
+  }
+}
+
+function closeDocument() {
+  const modal = document.getElementById('doc-modal');
+  if (modal) {
+    modal.setAttribute('aria-hidden', 'true');
+  }
+}
