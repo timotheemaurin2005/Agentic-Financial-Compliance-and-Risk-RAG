@@ -245,7 +245,7 @@ async function sendMessage() {
         const lines = eventChunk.split('\n');
         for (const line of lines) {
           if (!line.startsWith('data: ')) continue;
-          
+
           const payload = line.slice(6).trim();
           if (payload === '[DONE]') continue;
 
@@ -397,11 +397,11 @@ async function openDocument(filename, title) {
   try {
     const response = await fetch('/raw/' + filename);
     if (!response.ok) throw new Error('Document not found');
-    
+
     const text = await response.text();
     const parser = new DOMParser();
     const doc = parser.parseFromString(text, 'text/html');
-    
+
     // Cleanly extract text from paragraphs
     const paragraphs = doc.querySelectorAll('p');
     if (paragraphs.length > 0) {
