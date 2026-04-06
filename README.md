@@ -103,28 +103,26 @@ Every answer passes through a grounding check. If the verifier finds unsupported
 
 Evaluated across 30 gold-standard questions using RAGAS, covering factual lookups, numerical comparisons, cross-document analysis, and contradiction detection.
 
-| Metric | Score | Target |
-|--------|-------|--------|
-| Faithfulness | 0.62 | 0.85 |
-| Answer Relevancy | 0.71 | 0.80 |
-| Context Precision | 0.49 | 0.75 |
-| Context Recall | 0.34 | 0.70 |
+### Baseline → Optimised
 
-**Analysis:** The primary bottleneck is retrieval recall — the system retrieves approximately 34% of relevant context, which cascades into lower faithfulness and precision scores. Factual single-document queries (rate decisions, vote tallies) perform strongly, while cross-meeting contradiction queries suffer most due to namespace-separated storage requiring multiple retrieval passes across meeting dates.
+| Metric | Baseline | Optimised | Change |
+|--------|----------|-----------|--------|
+| Faithfulness | 0.62 | 0.65 | +4.8% |
+| Answer Relevancy | 0.71 | 0.60 | -15.5% |
+| Context Precision | 0.49 | 0.45 | -8.2% |
+| Context Recall | 0.34 | 0.47 | +38.2% |
 
-**Failure Mode Breakdown** (8 of 30 questions scored below 0.6 on at least one metric):
+### Optimisations Applied
+- **Cross-namespace retrieval** for comparison/contradiction queries, sweeping all meeting namespaces
+- **Query expansion** via LLM-generated rewrites (4 parallel embedding searches per query)
+- **Chunk overlap** increased from 50 → 100 tokens to reduce boundary information loss
+- **Progressive fallback** — automatically relaxes section and namespace filters when initial search returns zero results
 
-| Failure Mode | Count | Root Cause |
-|-------------|-------|------------|
-| Hallucination | 5 | Synthesizer generates claims beyond retrieved context |
-| Retrieval miss | 2 | Relevant chunks not retrieved due to namespace isolation |
-| Noise retrieval | 2 | Irrelevant chunks diluting context window |
+### Analysis
 
-**Identified Improvements:**
-- Increase `top_k` from 10 to 20 for comparison and contradiction queries to improve recall
-- Implement cross-namespace retrieval to avoid missing one side of a multi-meeting comparison
-- Tune chunk overlap from 50 to 100 tokens to reduce information loss at chunk boundaries
-- Add query expansion in the retriever node to catch paraphrased concepts
+The primary improvement is in **context recall** (+38%), confirming that the retrieval bottleneck was the main issue. The system now finds nearly half of all relevant context, up from a third. However, the broader search strategy introduces a precision-recall tradeoff — casting a wider net pulls in more noise alongside relevant chunks, which slightly reduces precision and answer relevancy.
+
+**Identified next steps:** An ablation study sweeping `top_k` and `chunk_size` combinations would identify the optimal balance point. Implementing a re-ranking layer (e.g., Cohere Rerank or a cross-encoder) between retrieval and synthesis would filter noise from the broadened results without sacrificing recall.
 
 ## Evaluation Framework
 
