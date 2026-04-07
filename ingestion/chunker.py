@@ -20,7 +20,7 @@ _ENC = tiktoken.get_encoding("cl100k_base")
 
 TARGET_MIN_TOKENS = 400
 TARGET_MAX_TOKENS = 600
-OVERLAP_TOKENS = 50
+OVERLAP_TOKENS = 100
 
 
 def _count_tokens(text: str) -> int:

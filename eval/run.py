@@ -150,6 +150,8 @@ def compute_ragas_metrics(
 
     llm, embeddings = _get_ragas_llm_and_embeddings()
 
+    from ragas.run_config import RunConfig
+
     logger.info("Running RAGAS evaluation on %d samples...", len(samples))
     result = evaluate(
         dataset=dataset,
@@ -157,6 +159,7 @@ def compute_ragas_metrics(
         llm=llm,
         embeddings=embeddings,
         raise_exceptions=False,
+        run_config=RunConfig(max_workers=1, max_retries=15, max_wait=90),
     )
 
     # EvaluationResult._repr_dict holds {metric_name: mean_score}
@@ -201,12 +204,15 @@ def compute_per_query_ragas(
 
     llm, embeddings = _get_ragas_llm_and_embeddings()
 
+    from ragas.run_config import RunConfig
+
     result = evaluate(
         dataset=dataset,
         metrics=metrics,
         llm=llm,
         embeddings=embeddings,
         raise_exceptions=False,
+        run_config=RunConfig(max_workers=1, max_retries=15, max_wait=90),
     )
 
     # EvaluationResult._repr_dict holds {metric_name: mean_score}

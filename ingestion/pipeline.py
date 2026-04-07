@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import logging
+import os
 import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
+from pinecone import Pinecone
 
 from ingestion.chunker import chunk_minutes, chunk_statement
 from ingestion.embedder import embed_chunks, generate_summaries
@@ -27,25 +29,72 @@ logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
+# Index clearing
+# ---------------------------------------------------------------------------
+
+def clear_all_namespaces(meeting_dates: list[str] | None = None) -> None:
+    """Delete all vectors from every namespace in the Pinecone index.
+
+    This must be run before re-ingestion when chunking parameters change.
+    """
+    load_dotenv()
+    pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
+    index_name = os.environ["PINECONE_INDEX_NAME"]
+    index = pc.Index(index_name)
+
+    dates = meeting_dates or MEETING_DATES
+    namespaces = [f"fomc_{d}" for d in dates]
+
+    # Also check actual index stats for any namespaces we might have missed
+    try:
+        stats = index.describe_index_stats()
+        existing_ns = list(stats.get("namespaces", {}).keys())
+        for ns in existing_ns:
+            if ns not in namespaces:
+                namespaces.append(ns)
+    except Exception as exc:
+        logger.warning("Could not fetch index stats: %s", exc)
+
+    for ns in namespaces:
+        try:
+            logger.info("Clearing namespace '%s' ...", ns)
+            index.delete(delete_all=True, namespace=ns)
+            logger.info("  ✅ Cleared '%s'", ns)
+        except Exception as exc:
+            logger.warning("  ⚠️  Failed to clear '%s': %s", ns, exc)
+
+    logger.info("All namespaces cleared.")
+
+
+# ---------------------------------------------------------------------------
 # Pipeline
 # ---------------------------------------------------------------------------
 
-def run_pipeline(meeting_dates: list[str] | None = None) -> None:
+def run_pipeline(
+    meeting_dates: list[str] | None = None,
+    clear_index: bool = False,
+) -> None:
     """Run the full ingestion pipeline end-to-end.
 
-    1. Download HTML from Fed website → save to data/raw/
-    2. Parse HTML with BeautifulSoup → extract article content
-    3. Detect sections → label each paragraph/block
-    4. Chunk text → 400-600 tokens per chunk with section labels
-    5. Generate summaries → one-line LLM summary per chunk
-    6. Embed → dual vectors (raw + summary) per chunk
-    7. Upsert → Pinecone with metadata filters
-    8. Verify → test query to confirm retrieval works
+    1. (Optional) Clear all Pinecone namespaces
+    2. Download HTML from Fed website → save to data/raw/
+    3. Parse HTML with BeautifulSoup → extract article content
+    4. Detect sections → label each paragraph/block
+    5. Chunk text → 400-600 tokens per chunk with section labels
+    6. Generate summaries → one-line LLM summary per chunk
+    7. Embed → dual vectors (raw + summary) per chunk
+    8. Upsert → Pinecone with metadata filters
+    9. Verify → test query to confirm retrieval works
     """
     load_dotenv()
 
     if meeting_dates is None:
         meeting_dates = MEETING_DATES
+
+    # ── Step 0a: Clear index if requested ─────────────────────────────────
+    if clear_index:
+        logger.info("═══ Step 0a: Clearing Pinecone index ═══")
+        clear_all_namespaces(meeting_dates)
 
     # ── Step 0: Ensure Pinecone index exists ──────────────────────────────
     logger.info("═══ Step 0: Ensuring Pinecone index exists ═══")
@@ -145,10 +194,27 @@ def _print_summary(chunks: list[Chunk]) -> None:
 # ---------------------------------------------------------------------------
 
 def main() -> None:
-    """CLI entry point for ``python -m ingestion.pipeline``."""
-    # Optionally accept meeting dates as CLI args
-    dates = sys.argv[1:] if len(sys.argv) > 1 else None
-    run_pipeline(meeting_dates=dates)
+    """CLI entry point for ``python -m ingestion.pipeline``.
+
+    Usage:
+        python -m ingestion.pipeline                # Normal run
+        python -m ingestion.pipeline --clear        # Clear index first, then re-ingest
+    """
+    import argparse
+
+    parser = argparse.ArgumentParser(description="FOMC ingestion pipeline")
+    parser.add_argument(
+        "--clear", action="store_true",
+        help="Clear all Pinecone namespaces before re-ingesting",
+    )
+    parser.add_argument(
+        "dates", nargs="*", default=None,
+        help="Optional meeting dates to process (default: all)",
+    )
+    args = parser.parse_args()
+
+    dates = args.dates if args.dates else None
+    run_pipeline(meeting_dates=dates, clear_index=args.clear)
 
 
 if __name__ == "__main__":

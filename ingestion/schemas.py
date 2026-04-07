@@ -9,6 +9,11 @@ from pydantic import BaseModel
 # Target FOMC meetings (from CLAUDE.md / ingestion-skill.md)
 # ---------------------------------------------------------------------------
 MEETING_DATES: list[str] = [
+    "2024-01-31",
+    "2024-03-20",
+    "2024-05-01",
+    "2024-06-12",
+    "2024-07-31",
     "2024-09-18",
     "2024-11-07",
     "2024-12-18",

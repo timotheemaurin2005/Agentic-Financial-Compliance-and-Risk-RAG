@@ -1,0 +1,322 @@
+{
+  "experiment_id": "eval_20260406_135839",
+  "timestamp": "2026-04-06T13:58:39.585198+00:00",
+  "config": {
+    "chunk_size": 512,
+    "chunk_overlap": 50,
+    "top_k": 10,
+    "embedding_model": "text-embedding-3-large",
+    "use_summary_embedding": true,
+    "llm_model": "gpt-4o"
+  },
+  "results": {
+    "faithfulness": 0.5251,
+    "answer_relevancy": 0.5958,
+    "context_precision": 0.7361,
+    "context_recall": 0.5399,
+    "mean_latency_seconds": 25.26,
+    "total_questions": 30
+  },
+  "per_query_results": [
+    {
+      "id": "q001",
+      "query_type": "factual",
+      "difficulty": "easy",
+      "question": "What was the target federal funds rate after the September 2024 FOMC meeting?",
+      "ground_truth": "The Committee decided to lower the target range for the federal funds rate by 1/2 percentage point to 4-3/4 to 5 percent at the September 2024 meeting.",
+      "generated_answer": "The target federal funds rate after the September 2024 FOMC meeting was lowered to a range of 4-3/4 to 5 percent [1], [2].",
+      "num_contexts_retrieved": 2,
+      "latency_seconds": 7.76
+    },
+    {
+      "id": "q002",
+      "query_type": "factual",
+      "difficulty": "easy",
+      "question": "What did the FOMC say about the labor market in the January 2025 statement?",
+      "ground_truth": "The January 2025 statement said that the unemployment rate has stabilized at a low level in recent months, and labor market conditions remain solid.",
+      "generated_answer": "The FOMC stated that the unemployment rate has stabilized at a low level in recent months, and labor market conditions remain solid in the January 2025 statement [1], [2].",
+      "num_contexts_retrieved": 2,
+      "latency_seconds": 6.72
+    },
+    {
+      "id": "q003",
+      "query_type": "factual",
+      "difficulty": "easy",
+      "question": "Who voted against the rate decision at the September 2024 FOMC meeting?",
+      "ground_truth": "Michelle W. Bowman voted against the September 2024 action, who preferred to lower the target range for the federal funds rate by 1/4 percentage point at this meeting.",
+      "generated_answer": "Michelle W. Bowman voted against the rate decision at the September 2024 FOMC meeting [1], [2], [3].",
+      "num_contexts_retrieved": 4,
+      "latency_seconds": 12.46
+    },
+    {
+      "id": "q004",
+      "query_type": "factual",
+      "difficulty": "easy",
+      "question": "What did the September 2024 FOMC statement say about inflation progress?",
+      "ground_truth": "The September 2024 statement said that inflation has made further progress toward the Committee's 2 percent objective but remains somewhat elevated, and that the Committee has gained greater confidence that inflation is moving sustainably toward 2 percent.",
+      "generated_answer": "The September 2024 FOMC statement noted that inflation has made further progress toward the Committee's 2 percent objective but remains somewhat elevated [1], [2].",
+      "num_contexts_retrieved": 2,
+      "latency_seconds": 9.04
+    },
+    {
+      "id": "q005",
+      "query_type": "factual",
+      "difficulty": "easy",
+      "question": "What was the FOMC's assessment of economic activity in the March 2025 statement?",
+      "ground_truth": "The March 2025 statement said that recent indicators suggest that economic activity has continued to expand at a solid pace.",
+      "generated_answer": "The FOMC's assessment of economic activity in the March 2025 statement was that economic activity has continued to expand at a solid pace. Additionally, the unemployment rate has stabilized at a low level in recent months, and labor market conditions remain solid. However, inflation remains somewhat elevated [1], [3].",
+      "num_contexts_retrieved": 4,
+      "latency_seconds": 13.17
+    },
+    {
+      "id": "q006",
+      "query_type": "factual",
+      "difficulty": "medium",
+      "question": "What change did the March 2025 FOMC announce regarding its securities holdings?",
+      "ground_truth": "Beginning in April, the Committee announced it will slow the pace of decline of its securities holdings by reducing the monthly redemption cap on Treasury securities from $25 billion to $5 billion, while maintaining the monthly redemption cap on agency debt and agency mortgage-backed securities at $35 billion.",
+      "generated_answer": "The March 2025 FOMC announced a change in its securities holdings by deciding to slow the pace of decline of its securities holdings. Specifically, the Committee will reduce the monthly redemption cap on Treasury securities from $25 billion to $5 billion, while maintaining the monthly redemption cap on agency debt and agency mortgage-backed securities at $35 billion [1], [2].",
+      "num_contexts_retrieved": 12,
+      "latency_seconds": 20.72
+    },
+    {
+      "id": "q007",
+      "query_type": "factual",
+      "difficulty": "medium",
+      "question": "Who dissented at the December 2024 FOMC meeting and what was their preferred action?",
+      "ground_truth": "Beth M. Hammack voted against the December 2024 action. She preferred to maintain the target range for the federal funds rate at 4-1/2 to 4-3/4 percent rather than cutting by 25 basis points.",
+      "generated_answer": "Beth M. Hammack dissented at the December 2024 FOMC meeting. She preferred to maintain the target range for the federal funds rate at 4-1/2 to 4-3/4 percent, citing uneven progress in returning inflation to 2 percent, the strength of the economy and the labor market, and the state of financial conditions as reasons for her preference [1], [2].",
+      "num_contexts_retrieved": 8,
+      "latency_seconds": 7.16
+    },
+    {
+      "id": "q008",
+      "query_type": "factual",
+      "difficulty": "medium",
+      "question": "What was the FOMC's risk assessment language in the March 2025 statement?",
+      "ground_truth": "The March 2025 statement said that uncertainty around the economic outlook has increased and that the Committee is attentive to the risks to both sides of its dual mandate. This dropped the previous language that 'risks to achieving its employment and inflation goals are roughly in balance.'",
+      "generated_answer": "The FOMC's risk assessment language in the March 2025 statement indicated that uncertainty around the economic outlook had increased, and the Committee was attentive to the risks to both sides of its dual mandate [1], [6]. The Committee expressed a readiness to adjust the stance of monetary policy as appropriate if risks emerged that could impede the attainment of its goals [2], [4]. This suggests a balanced approach to risk, with attention to both potential upside and downside risks.",
+      "num_contexts_retrieved": 12,
+      "latency_seconds": 11.89
+    },
+    {
+      "id": "q009",
+      "query_type": "numerical",
+      "difficulty": "easy",
+      "question": "By how many basis points did the FOMC cut rates in September 2024?",
+      "ground_truth": "The FOMC cut the target range for the federal funds rate by 50 basis points (1/2 percentage point) in September 2024, from 5-1/4 to 5-1/2 percent down to 4-3/4 to 5 percent.",
+      "generated_answer": "The FOMC cut rates by 50 basis points in September 2024. \n\nHere's the reasoning step by step:\n\n1. The context passages provide information about the FOMC's decision regarding the federal funds rate during the meeting on September 18, 2024.\n2. Both passages [1] and [2] state that the Committee decided to lower the target range for the federal funds rate by 1/2 percentage point.\n3. A change of 1/2 percentage point is equivalent to 50 basis points (since 1 percentage point equals 100 basis points).\n\nTherefore, the FOMC cut rates by 50 basis points in September 2024.",
+      "num_contexts_retrieved": 2,
+      "latency_seconds": 7.52
+    },
+    {
+      "id": "q010",
+      "query_type": "numerical",
+      "difficulty": "easy",
+      "question": "What target range was set at the November 2024 FOMC meeting?",
+      "ground_truth": "The FOMC lowered the target range for the federal funds rate by 1/4 percentage point to 4-1/2 to 4-3/4 percent at the November 2024 meeting.",
+      "generated_answer": "The target range set at the November 2024 FOMC meeting was 4-1/2 to 4-3/4 percent [1], [2].",
+      "num_contexts_retrieved": 2,
+      "latency_seconds": 6.54
+    },
+    {
+      "id": "q011",
+      "query_type": "numerical",
+      "difficulty": "easy",
+      "question": "What target range was set at the December 2024 FOMC meeting?",
+      "ground_truth": "The FOMC lowered the target range for the federal funds rate by 1/4 percentage point to 4-1/4 to 4-1/2 percent at the December 2024 meeting.",
+      "generated_answer": "The target range set at the December 2024 FOMC meeting was 4-1/4 to 4-1/2 percent [1], [2].",
+      "num_contexts_retrieved": 2,
+      "latency_seconds": 7.6
+    },
+    {
+      "id": "q012",
+      "query_type": "numerical",
+      "difficulty": "medium",
+      "question": "How many members dissented at the September 2024 FOMC meeting?",
+      "ground_truth": "One member dissented at the September 2024 meeting: Michelle W. Bowman, who preferred a 25 basis point cut instead of the 50 basis point cut.",
+      "generated_answer": "At the September 18, 2024 FOMC meeting, there was one dissenting vote. This is confirmed by the vote tally provided in the context passages. Specifically, Michelle W. Bowman voted against the monetary policy action, preferring to lower the target range for the federal funds rate by 1/4 percentage point, which is equivalent to 25 basis points [1], [2], [3]. The passages consistently indicate that 11 members voted in favor, and only one member dissented, confirming that the number of dissenting members was one.",
+      "num_contexts_retrieved": 4,
+      "latency_seconds": 13.63
+    },
+    {
+      "id": "q013",
+      "query_type": "numerical",
+      "difficulty": "medium",
+      "question": "What was the cumulative rate reduction from September 2024 through December 2024?",
+      "ground_truth": "The cumulative rate reduction from September through December 2024 was 100 basis points (1 percentage point): 50bp in September 2024 (to 4-3/4 to 5 percent), 25bp in November 2024 (to 4-1/2 to 4-3/4 percent), and 25bp in December 2024 (to 4-1/4 to 4-1/2 percent).",
+      "generated_answer": "To determine the cumulative rate reduction from September 2024 through December 2024, we need to analyze the changes in the federal funds rate target range as described in the provided context passages.\n\n1. **September 2024 Meeting:**\n   - The federal funds rate was lowered by 1/2 percentage point (50 basis points) to a target range of 4-3/4 to 5 percent [1], [6].\n\n2. **November 2024 Meeting:**\n   - The federal funds rate was further lowered by 1/4 percentage point (25 basis points) to a target range of 4-1/2 to 4-3/4 percent [2], [5].\n\n3. **December 2024 Meeting:**\n   - The federal funds rate was again lowered by 1/4 percentage point (25 basis points) to a target range of 4-1/4 to 4-1/2 percent [3], [4].\n\nNow, we calculate the cumulative reduction:\n\n- September reduction: 50 basis points\n- November reduction: 25 basis points\n- December reduction: 25 basis points\n\nCumulative reduction = 50 + 25 + 25 = 100 basis points\n\nTherefore, the cumulative rate reduction from September 2024 through December 2024 was 100 basis points.",
+      "num_contexts_retrieved": 6,
+      "latency_seconds": 9.46
+    },
+    {
+      "id": "q014",
+      "query_type": "numerical",
+      "difficulty": "medium",
+      "question": "How many total FOMC members voted at the January 2025 meeting?",
+      "ground_truth": "Twelve members voted at the January 2025 meeting: Jerome H. Powell, John C. Williams, Michael S. Barr, Michelle W. Bowman, Susan M. Collins, Lisa D. Cook, Austan D. Goolsbee, Philip N. Jefferson, Adriana D. Kugler, Alberto G. Musalem, Jeffrey R. Schmid, and Christopher J. Waller. The vote was unanimous.",
+      "generated_answer": "The total number of FOMC members who voted at the January 2025 meeting can be determined by examining the provided context passages.\n\n1. Passage [1] lists the names of the members who voted for the monetary policy action. The list includes Jerome H. Powell, John C. Williams, Michael S. Barr, Michelle W. Bowman, Susan M. Collins, Lisa D. Cook, Austan D. Goolsbee, Philip N. Jefferson, Adriana D. Kugler, Alberto G. Musalem, Jeffrey R. Schmid, and Christopher J. Waller.\n\n2. Passage [3] provides a summary of the meeting, stating that the total number of members voting was 12, with a unanimous vote outcome where all members voted \"For\" and none voted \"Against.\"\n\nBoth passages [1] and [3] confirm that 12 members voted at the January 29, 2025 meeting. Therefore, the total number of FOMC members who voted is 12.",
+      "num_contexts_retrieved": 4,
+      "latency_seconds": 12.42
+    },
+    {
+      "id": "q015",
+      "query_type": "numerical",
+      "difficulty": "hard",
+      "question": "By how much did the FOMC reduce the monthly Treasury redemption cap in March 2025?",
+      "ground_truth": "The FOMC reduced the monthly redemption cap on Treasury securities from $25 billion to $5 billion, a reduction of $20 billion per month, beginning in April 2025.",
+      "generated_answer": "The context passages provided do not specify the exact amount by which the FOMC reduced the monthly Treasury redemption cap in March 2025. The passages mention that the Committee decided to slow the pace of decline of its securities holdings by reducing the monthly redemption cap on Treasury securities beginning in April, but they do not provide a numerical value for this reduction [3], [4].\n\nTherefore, the evidence is insufficient to determine the exact amount by which the FOMC reduced the monthly Treasury redemption cap in March 2025.",
+      "num_contexts_retrieved": 4,
+      "latency_seconds": 8.01
+    },
+    {
+      "id": "q016",
+      "query_type": "numerical",
+      "difficulty": "hard",
+      "question": "How many consecutive meetings did the FOMC hold rates steady after the December 2024 cut?",
+      "ground_truth": "The FOMC held rates steady at 4-1/4 to 4-1/2 percent for two consecutive meetings after the December 2024 cut: January 2025 and March 2025.",
+      "generated_answer": "To determine how many consecutive meetings the FOMC held rates steady after the December 2024 cut, we need to analyze the sequence of meetings and their rate decisions.\n\n1. **December 2024 Meeting**: The FOMC decided to lower the target range for the federal funds rate by 25 basis points to 4-1/4 to 4-1/2 percent [2], [6].\n\n2. **January 2025 Meeting**: The FOMC decided to maintain the target range for the federal funds rate at 4-1/4 to 4-1/2 percent [1], [5]. This is the first meeting after the December 2024 cut where the rates were held steady.\n\n3. **March 2025 Meeting**: The FOMC again decided to maintain the target range for the federal funds rate at 4-1/4 to 4-1/2 percent [3], [4]. This is the second consecutive meeting after the December 2024 cut where the rates were held steady.\n\nBased on the provided context, the FOMC held rates steady for **two consecutive meetings** after the December 2024 rate cut.",
+      "num_contexts_retrieved": 6,
+      "latency_seconds": 10.52
+    },
+    {
+      "id": "q017",
+      "query_type": "comparison",
+      "difficulty": "easy",
+      "question": "How did the FOMC's labor market language differ between the September 2024 and January 2025 statements?",
+      "ground_truth": "In September 2024, the statement said 'Job gains have slowed, and the unemployment rate has moved up but remains low.' By January 2025, the language shifted to 'The unemployment rate has stabilized at a low level in recent months, and labor market conditions remain solid,' indicating the Committee saw labor market conditions as having stabilized rather than continuing to ease.",
+      "generated_answer": "The provided context does not include specific details from the September 2024 meeting, making it challenging to directly compare the FOMC's labor market language between September 2024 and January 2025. However, we can analyze the available information from meetings around those dates to infer potential differences or similarities.\n\n1. **January 2025 Statement:**\n   - The unemployment rate had stabilized at a low level, and labor market conditions remained solid [25].\n   - The Committee agreed to maintain the target range for the federal funds rate, indicating a stable policy stance [25].\n\n2. **December 2024 Statement:**\n   - Labor market conditions had generally eased since earlier in the year, and the unemployment rate had moved up but remained low [19].\n   - The Committee agreed to lower the target range for the federal funds rate by 25 basis points, suggesting a response to easing labor market conditions [11].\n\n3. **November 2024 Statement:**\n   - Labor market conditions had generally eased, and the unemployment rate had moved up but remained low [14].\n   - The Committee omitted previous language about confidence in inflation moving sustainably toward 2 percent, indicating a shift in focus or assessment [14].\n\n4. **January 2024 Statement:**\n   - Labor market conditions continued to be tight but showed signs of easing [13].\n   - The Committee maintained the target range for the federal funds rate, reflecting attentiveness to inflation risks [7].\n\n**Comparison:**\n- **Easing Labor Market Conditions:** Both the December 2024 and November 2024 statements noted that labor market conditions had generally eased, with the unemployment rate moving up but remaining low [11], [14]. This contrasts with the January 2024 statement, which described the labor market as tight but easing [13].\n- **Policy Adjustments:** The December 2024 meeting involved a rate cut, reflecting a response to the easing labor market conditions [11]. In contrast, the January 2025 meeting maintained the rate, suggesting stability in labor market assessments [25].\n\n**Conclusion:**\nThe FOMC's language evolved from describing a tight labor market in January 2024 to acknowledging easing conditions by the end of 2024. The January 2025 statement reflects a stable labor market with low unemployment, consistent with the easing trend noted in late 2024. However, without specific September 2024 data, a direct comparison is limited.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 56.46
+    },
+    {
+      "id": "q018",
+      "query_type": "comparison",
+      "difficulty": "easy",
+      "question": "Compare the rate decision language used in September 2024 versus November 2024.",
+      "ground_truth": "In September 2024, the Committee said 'In light of the progress on inflation and the balance of risks, the Committee decided to lower the target range.' In November 2024, the phrasing changed to 'In support of its goals, the Committee decided to lower the target range.' The September language explicitly cited inflation progress and risk balance as the rationale, while November used more generic goal-oriented framing.",
+      "generated_answer": "The provided context passages do not include specific information or data regarding the Federal Open Market Committee (FOMC) meetings or rate decision language for September 2024 or November 2024. Therefore, it is not possible to directly compare the rate decision language used in those months based on the available passages.\n\nHowever, we can infer some general trends from the information provided for other meetings in 2024:\n\n1. **Unanimous Decisions in 2024**: Throughout 2024, the FOMC meetings consistently resulted in unanimous votes for the decisions made, indicating a stable policy stance during that year [26]. This suggests that the committee maintained a consensus on monetary policy decisions, at least up to July 2024.\n\n2. **Economic Conditions and Policy Adjustments**: In the meetings leading up to the latter part of 2024, the FOMC noted solid economic activity, easing labor market conditions, and inflation progress, although inflation remained somewhat elevated [2], [6], [12]. The committee was attentive to risks and prepared to adjust policy as needed [9].\n\n3. **Rate Decisions**: In December 2024, the FOMC decided to lower the target range for the federal funds rate by 25 basis points, indicating a shift towards easing monetary policy [2], [7]. This decision was made with almost all members agreeing that the risks to achieving employment and inflation goals were roughly in balance [2].\n\nWithout specific data for September and November 2024, we cannot directly compare the rate decision language for those months. The overall trend in 2024 was one of unanimity and a cautious approach to adjusting policy based on economic conditions and risks. If external factors or economic data significantly changed in September or November 2024, it might have influenced the committee's language and decisions, but such details are not available in the provided passages.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 42.07
+    },
+    {
+      "id": "q019",
+      "query_type": "comparison",
+      "difficulty": "medium",
+      "question": "How did the FOMC's forward guidance language on additional rate adjustments change between November and December 2024?",
+      "ground_truth": "In November 2024, the Committee said 'In considering additional adjustments to the target range.' In December 2024, the language changed to 'In considering the extent and timing of additional adjustments to the target range,' adding 'extent and timing' which signaled a more cautious approach to future rate cuts.",
+      "generated_answer": "The provided context does not include specific information about changes in the FOMC's forward guidance language on additional rate adjustments between November and December 2024. The passages cover meetings from January 2024 to January 2025, but they do not directly address the November and December 2024 meetings. Therefore, the evidence is insufficient to determine how the FOMC's forward guidance language changed during that specific period.\n\nThe analysis of voting patterns and membership changes in the provided tables [26] indicates a period of consensus and stability in FOMC decision-making throughout 2024 and into early 2025, with no dissenting votes. However, this does not provide direct insight into any specific language changes in forward guidance between November and December 2024.\n\nIn conclusion, the evidence is insufficient to answer the question about changes in the FOMC's forward guidance language on additional rate adjustments between November and December 2024.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 46.1
+    },
+    {
+      "id": "q020",
+      "query_type": "comparison",
+      "difficulty": "medium",
+      "question": "Compare the dissents at the September 2024 and December 2024 meetings in terms of direction.",
+      "ground_truth": "The dissents were in opposite directions. In September 2024, Michelle W. Bowman dissented wanting a smaller cut (25bp instead of 50bp). In December 2024, Beth M. Hammack dissented wanting no cut at all (preferred to maintain the rate at 4-1/2 to 4-3/4 percent rather than cutting by 25bp).",
+      "generated_answer": "The provided context does not include specific information about dissents at the September 2024 FOMC meeting. However, for the November 2024 meeting, it is noted that all members voted \"For\" the decision, indicating no dissents [26]. In contrast, at the December 2024 meeting, Beth M. Hammack dissented because she preferred to maintain the target range for the federal funds rate at 4-1/2 to 4-3/4 percent, citing uneven progress in returning inflation to 2 percent, the strength of the economy, and the labor market [2], [5].\n\nIn terms of direction, the November 2024 meeting showed a consensus with no dissents, suggesting agreement on the policy direction at that time [26]. However, by December 2024, there was a dissent from Beth M. Hammack, indicating a divergence in views regarding the appropriate stance of monetary policy, with Hammack favoring a more restrictive policy than the Committee's decision to lower the target range [2], [5].\n\nIn summary, the November 2024 meeting had no dissents, reflecting consensus, while the December 2024 meeting had a dissent from Hammack, indicating a preference for maintaining a more restrictive policy stance.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 55.19
+    },
+    {
+      "id": "q021",
+      "query_type": "comparison",
+      "difficulty": "medium",
+      "question": "How did the economic outlook uncertainty language change between January 2025 and March 2025?",
+      "ground_truth": "In January 2025, the statement said 'The economic outlook is uncertain, and the Committee is attentive to the risks to both sides of its dual mandate.' In March 2025, the language shifted to 'Uncertainty around the economic outlook has increased. The Committee is attentive to the risks to both sides of its dual mandate.' The key change was the addition of 'has increased,' elevating the level of concern about uncertainty.",
+      "generated_answer": "The sources disagree on the economic outlook uncertainty language between January 2025 and March 2025.\n\nIn January 2025, the language used in the staff outlook indicates that \"elevated uncertainty regarding the scope, timing, and potential economic effects of potential policy changes\" was noted, but it does not specify a directional tilt in risks [16].\n\nBy March 2025, the language shifts to a more specific assessment: \"The staff judged that the risks around the baseline projections for economic activity and employment had tilted to the downside,\" indicating a more pessimistic view on economic activity and employment. Additionally, \"the risks around the baseline projection for inflation were still seen as skewed to the upside\" [18].\n\nPolicy Implications: The shift from a general acknowledgment of elevated uncertainty in January to a specific downside risk assessment for economic activity and employment in March suggests a growing concern about economic conditions. This could imply a potential for more cautious or accommodative monetary policy actions if downside risks materialize, while the upside risks to inflation might necessitate vigilance to prevent inflationary pressures from escalating.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 15.85
+    },
+    {
+      "id": "q022",
+      "query_type": "comparison",
+      "difficulty": "hard",
+      "question": "Compare the nature of the dissents at December 2024 and March 2025 \u2014 were they about rate policy itself or other aspects?",
+      "ground_truth": "The December 2024 dissent (Beth M. Hammack) was purely about the rate decision \u2014 she preferred no cut. The March 2025 dissent (Christopher J. Waller) was different: he supported the rate hold but disagreed on balance sheet policy, preferring to continue the current pace of decline in securities holdings rather than slowing them. This marked a shift from dissenting on rate levels to dissenting on quantitative tightening pace.",
+      "generated_answer": "ERROR: Error code: 429 - {'error': {'message': 'Rate limit reached for gpt-4o in organization org-DRDh8mndUziY8dQwzVZPT7WZ on tokens per min (TPM): Limit 30000, Used 30000, Requested 386. Please try again in 772ms. Visit https://platform.openai.com/account/rate-limits to learn more.', 'type': 'tokens', 'param': None, 'code': 'rate_limit_exceeded'}}",
+      "num_contexts_retrieved": 0,
+      "latency_seconds": 0.0
+    },
+    {
+      "id": "q023",
+      "query_type": "comparison",
+      "difficulty": "hard",
+      "question": "How did the November 2024 statement's inflation description compare to the September 2024 statement?",
+      "ground_truth": "In September 2024, the statement said inflation 'has made further progress toward the Committee's 2 percent objective but remains somewhat elevated' and added that the Committee 'has gained greater confidence that inflation is moving sustainably toward 2 percent.' In November 2024, the statement said inflation 'has made progress toward the Committee's 2 percent objective but remains somewhat elevated,' dropping both 'further' and the 'greater confidence' language, suggesting a less optimistic inflation assessment.",
+      "generated_answer": "The provided context does not include specific details from the November 2024 and September 2024 FOMC statements regarding inflation descriptions. Therefore, it is not possible to directly compare the inflation descriptions between these two statements using the available data. The analysis from the January 31, 2024, meeting indicates a unanimous decision among FOMC members, but it does not provide insights into the specific language or changes in inflation descriptions from the November and September 2024 statements [26].\n\nTo fully address the question, additional data from the specific FOMC statements of November 2024 and September 2024 would be required. The current passages do not provide this information, and thus, it is not possible to highlight similarities or differences in inflation descriptions between these two statements.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 65.52
+    },
+    {
+      "id": "q024",
+      "query_type": "contradiction",
+      "difficulty": "easy",
+      "question": "How did the FOMC's inflation language change between the September 2024 and January 2025 statements?",
+      "ground_truth": "In September 2024, the Committee stated it 'has gained greater confidence that inflation is moving sustainably toward 2 percent.' By January 2025, this confidence language was entirely removed, and the statement simply said 'Inflation remains somewhat elevated,' without mentioning progress or confidence. This represents a notable hawkish shift in tone.",
+      "generated_answer": "The provided context passages do not contain direct information on the FOMC's inflation language changes between the September 2024 and January 2025 statements. The passages cover meetings up to December 2024, but there is no specific mention of the September 2024 or January 2025 meetings. Therefore, it is not possible to determine how the FOMC's inflation language changed between these two periods based on the available data.\n\nThe analysis of the January 2024 and November 2024 meetings shows consistent unanimity in decision-making, suggesting stable policy support among FOMC members during the periods covered [26]. However, this does not provide insights into any potential changes in inflation language between September 2024 and January 2025.\n\nIn conclusion, the evidence is insufficient to answer the question regarding changes in the FOMC's inflation language between the specified periods.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 52.18
+    },
+    {
+      "id": "q025",
+      "query_type": "contradiction",
+      "difficulty": "medium",
+      "question": "The September 2024 statement initiated rate cuts citing inflation progress. Did subsequent meetings maintain this rationale?",
+      "ground_truth": "No. The September 2024 statement explicitly cited 'progress on inflation and the balance of risks' as the reason for cutting rates. By November 2024 and December 2024, the rationale shifted to the generic 'In support of its goals,' dropping the explicit inflation progress framing. By January 2025, the Committee held rates steady and the inflation language regressed to simply 'Inflation remains somewhat elevated,' contradicting the September optimism.",
+      "generated_answer": "The provided context does not include information about the September 2024 meeting or any subsequent meetings, so it is not possible to directly confirm whether the rationale for initiating rate cuts due to inflation progress was maintained in meetings after September 2024. However, we can analyze the information from the meetings leading up to July 2024 to understand the context and rationale at that time.\n\n1. **Inflation Progress and Policy Stance:**\n   - In the July 31, 2024 meeting, members noted that there had been \"some further progress toward the Committee's 2 percent inflation objective\" [12]. This suggests a recognition of progress in inflation, which could align with a rationale for easing policy if such progress continued.\n   - Participants in the July meeting expressed confidence that inflation was moving toward the Committee's objective, with the \"vast majority\" indicating that if data continued as expected, easing policy at the next meeting would likely be appropriate [18].\n\n2. **Monetary Policy Decisions:**\n   - Throughout the meetings from January to July 2024, the target range for the federal funds rate was maintained at 5-1/4 to 5-1/2 percent [5], [6], [12]. This indicates a consistent policy stance during this period, with no rate cuts implemented up to July 2024.\n\n3. **Risk Assessment and Economic Outlook:**\n   - Across the meetings, members consistently judged that the risks to achieving the Committee's employment and inflation goals were moving into better balance [5], [6], [12]. The economic outlook was viewed as uncertain, and members remained attentive to inflation risks [5], [6], [12].\n\n4. **Communication and Data Dependence:**\n   - The importance of a data-dependent approach was emphasized, with decisions conditional on the evolution of the economy rather than being on a preset path [18].\n\nIn summary, while the context up to July 2024 shows a recognition of inflation progress and a potential openness to policy easing if conditions warranted, there is no direct evidence in the provided passages about the September 2024 meeting or subsequent meetings to confirm whether the rationale for rate cuts was maintained. The information is insufficient to answer the question about post-September 2024 meetings explicitly.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 60.02
+    },
+    {
+      "id": "q026",
+      "query_type": "contradiction",
+      "difficulty": "medium",
+      "question": "The January 2025 statement says risks are 'roughly in balance,' but did the March 2025 statement agree with this assessment?",
+      "ground_truth": "No. The January 2025 statement said 'The Committee judges that the risks to achieving its employment and inflation goals are roughly in balance.' The March 2025 statement dropped this language entirely, instead saying 'Uncertainty around the economic outlook has increased,' which signals that the Committee no longer viewed risks as balanced and saw increased upside risks to inflation or downside risks to employment.",
+      "generated_answer": "The provided context passages do not contain information about the March 2025 statement, so it is not possible to determine whether the March 2025 statement agreed with the January 2025 assessment that risks were 'roughly in balance.' The passages only provide information up to March 2024 and do not include any details about the March 2025 meeting or statement. Therefore, the evidence is insufficient to answer the question regarding the March 2025 statement's agreement with the January 2025 assessment.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 56.1
+    },
+    {
+      "id": "q027",
+      "query_type": "contradiction",
+      "difficulty": "medium",
+      "question": "The November 2024 FOMC vote was unanimous, suggesting full consensus. Did subsequent meetings maintain this unanimity?",
+      "ground_truth": "The November 2024 vote was indeed unanimous with all 12 voting members in agreement. The December 2024 meeting broke this unanimity with Beth M. Hammack dissenting (preferring no cut). January 2025 returned to unanimity. Then March 2025 saw Christopher J. Waller dissent \u2014 not on the rate decision itself, but on the pace of balance sheet reduction. The unanimity was therefore not sustained.",
+      "generated_answer": "The November 2024 FOMC meeting was indeed unanimous, with all members voting \"For\" the decision [26]. However, subsequent meetings did not maintain this unanimity. In the December 18, 2024, meeting, there was a dissenting vote by Beth M. Hammack, who voted \"Against\" the decision [22], [26]. This indicates a shift from full consensus to a lack of unanimity during that period. By the January 29, 2025, meeting, unanimity was restored, with all members voting \"For\" the decision again [1], [26]. This sequence of events shows a temporary disruption in consensus, which was resolved by the following meeting.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 23.07
+    },
+    {
+      "id": "q028",
+      "query_type": "contradiction",
+      "difficulty": "hard",
+      "question": "Track how the FOMC's description of inflation evolved across all five meetings from September 2024 to March 2025.",
+      "ground_truth": "September 2024: 'Inflation has made further progress toward the Committee's 2 percent objective but remains somewhat elevated' with 'greater confidence' it is moving sustainably toward 2 percent. November 2024: Dropped 'further' \u2014 'Inflation has made progress toward the Committee's 2 percent objective but remains somewhat elevated.' December 2024: Identical to November \u2014 'has made progress...but remains somewhat elevated.' January 2025: Dropped progress language entirely \u2014 simply 'Inflation remains somewhat elevated.' March 2025: Identical to January \u2014 'Inflation remains somewhat elevated.' The trajectory shows a steady retreat from the initial inflation optimism.",
+      "generated_answer": "To track the evolution of the FOMC's description of inflation from September 2024 to March 2025, we can analyze the provided context passages from the relevant meetings:\n\n1. **September 2024 Meeting**:\n   - Participants observed that inflation remained somewhat elevated, but almost all participants judged that recent monthly readings were consistent with inflation returning sustainably to 2 percent [12], [20].\n\n2. **December 2024 Meeting**:\n   - Participants noted that although inflation had eased substantially from its peak in 2022, it remained somewhat elevated. They commented that the overall pace of disinflation had slowed over 2024, with some recent monthly price readings higher than anticipated [1], [6].\n\n3. **January 2025 Meeting**:\n   - Participants observed that inflation had eased significantly over the past two years but remained somewhat elevated relative to the Committee's 2 percent goal. Progress toward that goal had slowed over the past year. Total PCE prices rose about 2.6 percent over the 12 months ending in December, with core PCE prices rising 2.8 percent [10], [23].\n\n**Comparison and Evolution**:\n- **September 2024**: There was optimism that inflation readings were aligning with the 2 percent target, suggesting confidence in the trajectory toward the goal [12], [20].\n- **December 2024**: The tone shifted to a more cautious outlook, noting a slowdown in disinflation and unexpected higher monthly readings, indicating concerns about the pace of progress [1], [6].\n- **January 2025**: The description acknowledged significant easing over two years but highlighted that progress had slowed, with inflation still above the target. This reflects a recognition of persistent challenges in achieving the 2 percent goal [10], [23].\n\nOverall, the FOMC's description of inflation evolved from a more optimistic view in September 2024 to a cautious and concerned stance by December 2024 and January 2025, reflecting challenges in maintaining the disinflationary momentum and achieving the 2 percent target.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 32.72
+    },
+    {
+      "id": "q029",
+      "query_type": "contradiction",
+      "difficulty": "hard",
+      "question": "The September 2024 FOMC appeared confident enough to cut by 50bp. Does the March 2025 stance contradict this confidence?",
+      "ground_truth": "Yes, substantially. In September 2024, the Committee cut by 50bp citing that it 'has gained greater confidence that inflation is moving sustainably toward 2 percent' and judged risks 'roughly in balance.' By March 2025, the Committee was holding rates steady, had dropped all confidence language on inflation, stated only that 'Inflation remains somewhat elevated,' and noted that 'Uncertainty around the economic outlook has increased' \u2014 no longer characterizing risks as balanced. Additionally, the Committee was slowing balance sheet reduction, a signal of caution rather than confidence.",
+      "generated_answer": "The sources provided do not indicate a contradiction between the September 2024 FOMC's confidence, which led to a 50 basis point rate cut, and the March 2025 stance. The September 2024 meeting showed that \"almost all participants expressed greater confidence that inflation was moving sustainably toward 2 percent\" and \"all participants agreed that it was appropriate to ease the stance of monetary policy\" by lowering the target range for the federal funds rate by 50 basis points [1], [3]. This decision was supported by the observation that the risks to achieving the Committee's employment and inflation goals were \"roughly in balance\" [1], [3].\n\nIn March 2025, the FOMC decided to maintain the target range for the federal funds rate at 4-1/4 to 4-1/2 percent, with no dissenting votes recorded, indicating a strong consensus among FOMC members [25], [26]. The consistent unanimity in voting across meetings suggests a stable consensus among FOMC members, which could imply confidence in their policy decisions [26]. There is no evidence of contradiction in the FOMC's stance from March 2025 compared to the confidence implied by the rate cut in September 2024. The unanimous votes across all meetings indicate a consistent and unified approach to monetary policy decisions.\n\nTherefore, the sources agree that there is no contradiction between the September 2024 and March 2025 stances, as the consistent unanimity in voting suggests a stable consensus and confidence in policy decisions.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 31.78
+    },
+    {
+      "id": "q030",
+      "query_type": "contradiction",
+      "difficulty": "hard",
+      "question": "Track the evolution of forward guidance language on rate adjustments across the five meetings from September 2024 to March 2025.",
+      "ground_truth": "September 2024: 'In considering additional adjustments to the target range for the federal funds rate, the Committee will carefully assess incoming data, the evolving outlook, and the balance of risks.' November 2024: Identical language \u2014 'In considering additional adjustments.' December 2024: Added 'extent and timing' \u2014 'In considering the extent and timing of additional adjustments,' signaling more caution. January 2025: Maintained the 'extent and timing' language while holding rates steady. March 2025: Maintained the 'extent and timing' language while still holding rates steady. The addition of 'extent and timing' in December marked the pivot from active cutting to a more patient stance.",
+      "generated_answer": "The provided context passages do not cover meetings from September 2024 to March 2025. The latest meeting information available is from July 31, 2024 [11], and the next meeting mentioned is scheduled for September 17-18, 2024 [22]. Therefore, there is no information available to track the evolution of forward guidance language on rate adjustments for the specified period from September 2024 to March 2025. If you have access to additional documents or context, please provide them for a more comprehensive analysis.",
+      "num_contexts_retrieved": 50,
+      "latency_seconds": 56.08
+    }
+  ]
+}
